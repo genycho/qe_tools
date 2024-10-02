@@ -20,3 +20,10 @@ def get_externalpath():
     external_parent_path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
     return external_parent_path
 
+@pytest.fixture(scope='session')
+def get_projectpath():
+    """ get external parent folder path to access externally saved big large dicom sample files
+    """
+    external_parent_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    return external_parent_path
+

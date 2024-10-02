@@ -33,7 +33,6 @@ def make_sonarqube_reports(sonarqube_url, project_component_key):
     return all_issues_list
 
 
-
 def _convert_json_to_issuelist(issue_json_item, row_no, sonarqube_url):
     to_return_list = []
     # writer.writerow(["No", "Type", "Severity", "Rule", "Message", "File", "Line"])
@@ -86,7 +85,7 @@ def make_excelreport(output_path, result_sonarqube_json, sonarqube_url):
                 codesmell_critmajor_count +=1
         all_issuelist.append(_convert_json_to_issuelist(a_issue_json,row_count,sonarqube_url))
         row_count += 1
-    summary_dict.update({". Project":})
+    summary_dict.update({". Project":project_name})
     summary_df = json_normalize(summary_info)
     details_df = json_normalize(result_sonarqube_json)
     date_string = qe_utils.get_curdatetime()
