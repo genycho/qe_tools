@@ -63,4 +63,22 @@ def get_curdatetime_millisec():
     # return _get_curdatetime_wformat('%Y%m%d_%H%M%S%f')
     return _get_curdatetime_wformat('%Y%m%d%H%M%S%f')
 
+############### API Spec ################
+def get_request_type(api_info):
+    return get_request_type(api_info, 2)
+
+def get_request_type(api_info, spec_version):
+    """ "swagger": "2.0", "openapi": "3.1.0","openapi": "3.0.0","openapi": "3.0.2",
+    """
+    if 2 == spec_version:
+        if api_info.consumes != None and len(api_info.consumes)>0:
+            return api_info.consumes[0]
+        else: 
+            return ""
+    elif 3 == spec_version:
+        if api_info.requestBody != None and api_info.requestBody.content!=None:
+            return api_info.requestBody.content
+        else:
+            return ""
+
 

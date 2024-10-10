@@ -1,0 +1,5 @@
+GET_METHOD_TEMPLATEFILENAME = "get_api_template_v1.py.jinja"
+POST_METHOD_TEMPLATEFILENAME = "post_api_template_v1.py.jinja"
+PUT_METHOD_TEMPLATEFILENAME = "put_api_template_v1.py.jinja"
+PATCH_METHOD_TEMPLATEFILENAME = "put_api_template_v1.py.jinja"
+DELETE_METHOD_TEMPLATEFILENAME = "delete_api_template_v1.py.jinja"

@@ -5,3 +5,5 @@ pytest-html
 unittest-xml-reporting
 pytest-cov
 openpyxl
+
+python-dotenv

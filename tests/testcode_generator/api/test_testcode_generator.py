@@ -5,6 +5,7 @@ import json, time
 # from common import api_test_util as util
 from apitest_generator import spec_parser
 from apitest_generator import code_generator
+import logging
 
 def test_specparser_swagger_v20_basic(get_dirpath,get_projectpath):
     swagger_json_path = get_dirpath+"/testcode_generator/api/test_resource/swagger_petstore_v2_107.json"
