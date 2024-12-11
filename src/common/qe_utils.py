@@ -76,8 +76,12 @@ def get_request_type(api_info, spec_version):
         else: 
             return ""
     elif 3 == spec_version:
-        if api_info.requestBody != None and api_info.requestBody.content!=None:
-            return api_info.requestBody.content
+        # if api_info.requestBody != None and api_info.requestBody.content!=None:
+        if api_info.consumes != None and len(api_info.consumes)>0:
+            if 'application/json' in api_info.consumes:
+                return 'application/json'
+            else:
+                return api_info.consumes[0]
         else:
             return ""
 

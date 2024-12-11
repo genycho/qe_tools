@@ -61,8 +61,6 @@ class ApiInfo:
         #                 }
         #             }
         #         ],
-
-
         self.responses = apiinfo_json.get("responses")
         self.security = apiinfo_json.get("security")
 
@@ -73,40 +71,22 @@ class ApiInfo:
         self.path = api_path
         self.method = api_mehotd
         self.name = apiinfo_json.get("operationId") if apiinfo_json.get("operationId") else apiinfo_json.get("summary")
-        self.operation_id = apiinfo_json.get("operationId")
+        self.operation_id = apiinfo_json.get("operationId") if apiinfo_json.get("operationId") != None else api_path.replace("/","").lower()
         self.description = apiinfo_json.get("description")
         self.summary = apiinfo_json.get("summary")
         self.tag = apiinfo_json.get("tags")[0] if apiinfo_json.get("tags") and len(apiinfo_json.get("tags"))>0 else None
-
-        self.consumes = apiinfo_json.get("consumes")
+        if apiinfo_json.get("parameters") != None and len(apiinfo_json.get("parameters"))>0:
+            for v3_a_param in apiinfo_json.get("parameters"):
+                if v3_a_param.get('schema').get('type') == None:
+                    print("here")
+                self.parameters.append({"in": v3_a_param['in'],"name": v3_a_param['name'],"description":v3_a_param.get('description'), "required":v3_a_param.get('required'), "type":v3_a_param.get('schema').get('type')})
+        # self.consumes = apiinfo_json.get("consumes")
+        if apiinfo_json.get("requestBody") != None and apiinfo_json.get("requestBody").get("content") != None and len(apiinfo_json.get("requestBody").get("content").keys())>0:
+            self.consumes = list(apiinfo_json.get("requestBody").get("content").keys())
+            self.parameters.append({"in": "body","name": "body","schema":list(apiinfo_json.get("requestBody").get("content").values())[0]['schema']})
         self.produces = apiinfo_json.get("produces")
-        
-        self.parameters = apiinfo_json.get("parameters")
-        # 1) 쿼리
-        # "parameters": [
-        #             {
-        #                 "name": "status",
-        #                 "in": "query",
-        #                 "description": "Status values that need to be considered for filter",
-        #                 "required": false,
-        #                 "explode": true,
-        #                 "schema": {
-        #                     "type": "string",
-        #                     "default": "available",
-        #                     "enum": [
-        #                         "available",
-        #                         "pending",
-        #                         "sold"
-        #                     ]
-        #                 }
-        #             }
-        #         ],
-        apiinfo_json.get("requestBody")  #TODO 
         self.responses = apiinfo_json.get("responses")
         self.security = apiinfo_json.get("security")
-
-    # def __init__(self):
-        # self.name=""
 
 # @dataclass
 class ApiTCInfo(ApiInfo):
@@ -116,9 +96,14 @@ class ApiTCInfo(ApiInfo):
     test_declartion_str:str #각 테스트함수 이름을 정의하는 문장입니다
     testmethod_declaration:str  #각 테스트 함수(케이스) 주석 설명에 사용됩니다
     header_str:str  #테스트 상단 헤더 content-type 등 설정에 사용되는 라인입니다
+
     path_params_set_str:str #상단 path parameter를 세팅하는 라인입니다
     path_params_str:str #상단 path parameter를 세팅하는 라인입니다
     query_params_str:str    #상단 params={}을 채우는데 사용되는 문자열입니다
+
+    formparms_str:str
+    multipart_file_str:str
+
     request_str:str #테스트 실행 문구를 구성합니다
     jsonbody_str:str    #post,put 등에서 json 요청 바디를 표시하는 문자열입니다
     assert_str_list:str #테스트 assertion 을 출력하는데 사용되는 리스트입니다
@@ -126,16 +111,16 @@ class ApiTCInfo(ApiInfo):
     def set_apiinfo(self, api_info:ApiInfo):
         self.name = api_info.method+"_"+api_info.name
         self.base_url = api_info.base_url
-        self.consumes = api_info.consumes
-        self.description = api_info.description
-        self.method = api_info.method
+        # self.consumes = api_info.consumes
         self.operation_id = api_info.operation_id
-        self.parameters = api_info.operation_id
         self.path = api_info.path
-        self.produces = api_info.produces
-        self.tag = api_info.tag
-        self.project_title = api_info.project_title
-        self.responses = api_info.responses
+        self.method = api_info.method
+        self.description = api_info.description
         self.summary = api_info.summary
-        self.security_definitions = api_info.security_definitions
+        # self.parameters = api_info.operation_id
+        # self.produces = api_info.produces
+        # self.tag = api_info.tag
+        # self.project_title = api_info.project_title
+        # self.responses = api_info.responses
+        # self.security_definitions = api_info.security_definitions
 

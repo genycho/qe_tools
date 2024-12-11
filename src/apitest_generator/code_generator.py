@@ -17,9 +17,10 @@ def code_generate(template_path, template_filename, output_path, tc_list):
     if len(tc_list) ==0:
         raise QEToolException("There is no tc data to generate!!")
     first_tc = tc_list[0]
-    output_fullpath = output_path + f"/test_{first_tc.name}.py"
+    file_name = first_tc.name.lower()
+    output_fullpath = output_path + f"/test_{file_name}.py"
     if path.exists(output_fullpath):
-        output_fullpath = output_path + f"/test_{first_tc.name}_{qe_utils.get_curdatetime()}.py"
+        output_fullpath = output_path + f"/test_{file_name}_{qe_utils.get_curdatetime()}.py"
     with open(output_fullpath, 'wb') as f:
     # with open(output_fullpath, 'w') as f:
         f.write(output.encode("utf-8"))

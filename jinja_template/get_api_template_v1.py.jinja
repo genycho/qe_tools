@@ -21,7 +21,6 @@ def test_get_{{a_tc.test_declartion_str}}:
         {{a_tc.query_params_str}}
     }
     response = {{a_tc.request_str}}, params=params, headers=headers)
-{% for a_assert in a_tc.assert_str_list %}    {{ a_assert }}
-{%- endfor %}
+{% for a_assert in a_tc.assert_str_list %}    {{ a_assert }}{%- endfor %}
 
 {% endfor %}
